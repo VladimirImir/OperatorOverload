@@ -197,6 +197,36 @@ Fraction operator-(Fraction left, Fraction right)
 	right.to_improrep();
 	return Fraction(left.get_numerator() * right.get_denominator() - right.get_numerator() * left.get_denominator(), left.get_denominator() * right.get_denominator()).to_proper().reduse();
 }
+bool operator<(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) < left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
+bool operator>(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) > left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
+bool operator<=(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) <= left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
+bool operator>=(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) >= left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
+bool operator==(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) == left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
+bool operator!=(const Fraction& right, const Fraction& left)
+{
+
+	return right.get_integer() + double(right.get_numerator() / right.get_denominator()) != left.get_integer() + double(left.get_numerator() / left.get_denominator()) ? true : false;
+}
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -228,4 +258,62 @@ void main()
 	cout << endl;
 	cout << "Прибавление с присваиванием: "; (J += K).print();
 	cout << endl;
+	cout << "|====================================================================|" << endl;
+	cout << "\t\t\t Overload Comparison Operators" << endl;
+	cout << endl;
+	Fraction Aa(20, 2, 3), Bb(99, 4, 5);
+	if (Aa < Bb)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+	Fraction Cc(20, 2, 3), Dd(99, 4, 5);
+	if (Cc > Dd)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+	Fraction Ee(20, 2, 3), Ff(99, 4, 5);
+	if (Ee <= Ff)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+	Fraction Gg(20, 2, 3), Hh(99, 4, 5);
+	if (Gg >= Hh)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+	Fraction Ii(20, 2, 3), Jj(99, 4, 5);
+	if (Ii == Jj)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+	Fraction Kk(20, 2, 3), Ll(99, 4, 5);
+	if (Kk != Ll)
+	{
+		cout << true << endl;
+	}
+	else
+	{
+		cout << false << endl;
+	}
+
 }
