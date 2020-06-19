@@ -42,21 +42,30 @@ public:
 		this->denominator = 1;
 		//cout << "DefConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
 		//cout << "Constructor:\t" << this << endl;
 	}
-	Fraction(int numerator, int denominator)
+	explicit Fraction(double decimal)
+	{
+		integer = decimal;
+		decimal -= integer;
+		decimal *= 100000000;
+		numerator = decimal;
+		denominator = 100000000;
+		reduse();
+	}
+	explicit Fraction(int numerator, int denominator)
 	{
 		this->integer = 0;
 		this->numerator = numerator;
 		this->set_denominator(denominator);
 		//cout << "Constructor:\t" << this << endl;
 	}
-	Fraction(int integer, int numerator, int denominator)
+	explicit Fraction(int integer, int numerator, int denominator)
 	{
 		this->integer = integer;
 		this->numerator = numerator;
@@ -116,6 +125,37 @@ public:
 		this->numerator = this->numerator * other.denominator - this->denominator * other.numerator;
 		this->denominator = this->denominator *= other.denominator;
 		return this->reduse().to_proper();
+	}
+	Fraction& operator++() //Prefix increment
+	{
+		integer++;
+		return *this;
+	}
+	Fraction operator++(int) //Postffix increment
+	{
+		Fraction buffer = *this;
+		integer++;
+		return buffer;
+	}
+	Fraction& operator()(int integer, int numerator, int denominator)
+	{
+		set_integer(integer);
+		set_numerator(numerator);
+		set_denominator(denominator);
+		cout << "Operator()\t" << this << endl;
+		return *this;
+	}
+
+
+	//				Type-cast operators:
+	explicit operator int() const
+	{
+		return integer;
+	}
+
+	explicit operator double() const
+	{
+		return integer + (double)numerator / denominator;
 	}
 
 	//	Metods
@@ -196,6 +236,20 @@ Fraction operator-(Fraction left, Fraction right)
 	left.to_improrep();
 	right.to_improrep();
 	return Fraction(left.get_numerator() * right.get_denominator() - right.get_numerator() * left.get_denominator(), left.get_denominator() * right.get_denominator()).to_proper().reduse();
+}
+ostream& operator<<(ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer())cout << obj.get_integer();
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer()) cout << "+";
+		cout << obj.get_numerator() << "/" << obj.get_denominator();
+	}
+	else if (obj.get_integer() == 0)
+	{
+		cout << 0;
+	}
+	return os;
 }
 bool operator<(const Fraction& right, const Fraction& left)
 {
@@ -315,5 +369,30 @@ void main()
 	{
 		cout << false << endl;
 	}
+	cout << endl;
+	cout << "|====================================================================|" << endl;
+	double q = 5;	//
+	cout << q << endl;
+	Fraction Q;// = 5;	//Single argument constructor.
+	cout << Q << endl;
+	Q = (Fraction)8;
+	cout << Q << endl;
+
+	Fraction W(2, 1, 2);
+	double w = (double)W;
+	cout << w << endl;
+	int r = (int)W;
+	cout << r << endl;
+
+
+	Fraction R(3.14);	//explicit constructor можно вызвать только так, 
+						//его нельзя вызвать оператором '='.
+	cout << R << endl;
+
+	/*C.set_integer(2);
+	C.set_numerator(7);
+	C.set_denominator(8);*/
+	R(2, 7, 8);
+	cout << R << endl;
 
 }
